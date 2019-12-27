@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
+
         tabs.getTabAt(0)?.setIcon(R.drawable.ic_perm_identity_24px)
         tabs.getTabAt(1)?.setIcon(R.drawable.ic_photo_library_24px)
         tabs.getTabAt(2)?.setIcon(R.drawable.ic_map_24px)

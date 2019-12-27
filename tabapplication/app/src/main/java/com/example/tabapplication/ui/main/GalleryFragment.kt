@@ -4,6 +4,7 @@ package com.example.tabapplication.ui.main
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.content.Context
+import android.content.res.Configuration
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -62,6 +63,10 @@ class GalleryFragment : Fragment() {
         )
         var gridview: GridView =  view.findViewById(R.id.myGridView)
         gridview.adapter = adapter
+        //가로모드인 경우 col수 3개로 바꿈
+        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            gridview.numColumns = 3
+        }
         return view
     }
 }
