@@ -28,15 +28,15 @@ class SectionsPagerAdapter(fm: FragmentManager) :
         }
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
-        return when (position) {
-            0 -> "Address Book"
-            1 -> "Gallery"
-            else -> {
-                return "Map"
-            }
-        }
-    }
+//    override fun getPageTitle(position: Int): CharSequence? {
+//        return when (position) {
+//            0 -> "Address Book"
+//            1 -> "Gallery"
+//            else -> {
+//                return "Map"
+//            }
+//        }
+//    }
 
     override fun getCount(): Int {
         // Show 2 total pages.
