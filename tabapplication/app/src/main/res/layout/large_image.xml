@@ -10,15 +10,15 @@
         android:theme="@style/AppTheme"/>
 
     <TextView
-        android:id="@+id/imageName"
+        android:id="@+id/largeName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="46dp"
         android:layout_gravity="left"
         android:minHeight="?actionBarSize"
         android:padding="@dimen/appbar_padding"
         android:text="Christmas"
-        android:textSize="@dimen/activity_horizontal_margin"
-        android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
+        android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+        android:textSize="12dp" />
     <ImageView
         android:id = "@+id/largeImage"
         android:layout_width="match_parent"

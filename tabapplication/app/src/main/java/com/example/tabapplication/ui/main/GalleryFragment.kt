@@ -1,22 +1,23 @@
 package com.example.tabapplication.ui.main
 
 
-import android.annotation.SuppressLint
-import android.os.Bundle
-import android.content.Context
+import PhotoAdapter
+import android.content.Intent
 import android.content.res.Configuration
-import androidx.fragment.app.Fragment
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
-import android.widget.BaseAdapter
+import android.widget.AdapterView
 import android.widget.GridView
-
+import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import com.example.tabapplication.R
 import com.example.tabapplication.R.layout.fragment_gallery
-import kotlinx.android.synthetic.main.fragment_gallery.*
-import kotlinx.android.synthetic.main.photo_entry.view.*
+import com.example.tabapplication.R.layout.large_image
+import java.io.ByteArrayOutputStream
 
 
 
@@ -26,7 +27,7 @@ class GalleryFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        photosList.add(Photo("Christmas",R.drawable.christmas))
+        photosList.add(Photo("Christmas", R.drawable.christmas))
         photosList.add(Photo("Gift",R.drawable.gift))
         photosList.add(Photo("Branch",R.drawable.branch))
         photosList.add(Photo("City",R.drawable.city))
@@ -49,8 +50,10 @@ class GalleryFragment : Fragment() {
 
         adapter = PhotoAdapter(context,this, this.photosList)
 
-
     }
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -67,45 +70,33 @@ class GalleryFragment : Fragment() {
         if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             gridview.numColumns = 3
         }
+
+        gridview.onItemClickListener = object: AdapterView.OnItemClickListener{
+            override fun onItemClick(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                var large: View = inflater.inflate(
+                    large_image,
+                    container,
+                    false
+                )
+
+                val photo: Photo = adapter!!.getItem(position)
+
+                val intent = Intent(parent!!.context, ImageActivity::class.java)
+                intent.putExtra("name",photo.name)
+                intent.putExtra("image", photo.image)
+                startActivity(intent)
+            }
+        }
+
         return view
     }
 }
 
-class PhotoAdapter: BaseAdapter {
-
-    var photosList = ArrayList<Photo>()
-    var context: Context? = null
-    var fragment: GalleryFragment? = null
-    constructor(context: Context?, fragment: GalleryFragment?, photosList: ArrayList<Photo>) : super() {
-        this.context = context
-        this.fragment = fragment
-        this.photosList = photosList
-    }
-
-    override fun getCount(): Int {
-        return photosList.size
-    }
-
-    override fun getItem(position: Int): Any {
-        return photosList[position]
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    @SuppressLint("ViewHolder")
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val photo = this.photosList[position]
-
-        var inflator = context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        var photoView = inflator.inflate(R.layout.photo_entry, null)
-        photoView.img.setImageResource(photo.image!!)
-        photoView.textName.text = photo.name!!
-
-        return photoView
-    }
-}
 
 
 
