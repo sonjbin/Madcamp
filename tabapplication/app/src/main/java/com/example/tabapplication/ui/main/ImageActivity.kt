@@ -17,7 +17,6 @@ class ImageActivity: AppCompatActivity() {
         var image: ImageView = findViewById(R.id.largeImage)
         var text: TextView = findViewById(R.id.largeName)
         val intent: Intent = intent
-
         text.text = intent.getStringExtra("name")
         image.setImageResource(intent.getIntExtra("image",0))
 

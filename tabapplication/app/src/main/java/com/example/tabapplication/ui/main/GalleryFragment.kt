@@ -78,11 +78,6 @@ class GalleryFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                var large: View = inflater.inflate(
-                    large_image,
-                    container,
-                    false
-                )
 
                 val photo: Photo = adapter!!.getItem(position)
 

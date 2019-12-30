@@ -39,7 +39,7 @@ class SectionsPagerAdapter(fm: FragmentManager) :
 //    }
 
     override fun getCount(): Int {
-        // Show 2 total pages.
+        // Show 3 total pages.
         return 3
     }
 }

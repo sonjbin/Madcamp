@@ -19,7 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.main.ImageActivity"/>
+        <activity android:name=".ui.main.ImageActivity"
+            android:label="Gallery"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>
