@@ -1,4 +1,4 @@
-package com.example.tabapplication.ui.main
+package com.example.tabapplication.ui.main.fragment
 
 
 import android.os.Bundle
@@ -12,14 +12,14 @@ import com.example.tabapplication.R
 /**
  * A simple [Fragment] subclass.
  */
-class NumberFragment : Fragment() {
+class MapFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_number, container, false)
+        return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
 
