@@ -1,5 +1,6 @@
 package com.example.tabapplication
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 
 import com.google.android.material.tabs.TabLayout

@@ -3,6 +3,7 @@ package com.example.tabapplication.ui.main.fragment
 import android.Manifest
 import android.app.Activity
 import android.content.*
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.database.Cursor
 import android.net.Uri
@@ -65,7 +66,6 @@ class GalleryFragment : Fragment(), GalleryImageClickListener {
         }
         recyclerview.layoutManager = GridLayoutManager(context, SPAN_COUNT)
         recyclerview.adapter = galleryAdapter
-
 
         val mFab: FloatingActionButton = view.findViewById(R.id.addButton)
         mFab.setOnClickListener{
@@ -162,24 +162,25 @@ class GalleryFragment : Fragment(), GalleryImageClickListener {
 
         if(requestCode == PICK_FROM_ALBUM){
 
-            if(data.clipData== null){
-                Toast.makeText(context, "다중 선택이 불가한 기기입니다.", Toast.LENGTH_LONG).show()
-            }
-            else{
-                var clipData: ClipData ?= data.clipData
-                Log.i("clipdata", clipData!!.itemCount.toString())
+            if (data != null) {
+                if(data.clipData== null){
+                    Toast.makeText(context, "다중 선택이 불가한 기기입니다.", Toast.LENGTH_LONG).show()
+                } else{
+                    var clipData: ClipData ?= data.clipData
+                    Log.i("clipdata", clipData!!.itemCount.toString())
 
-                if(clipData.itemCount > 9){
-                    Toast.makeText(context,"사진은 9장까지 선택 가능합니다", Toast.LENGTH_LONG).show()
-                }
-//                else if(clipData.itemCount == 1){
-//
-//                }
-                else{
-                    for(i in 0 until clipData.itemCount){
-                        imageList.add(Image("new",clipData.getItemAt(i).uri.toString()))
+                    if(clipData.itemCount > 9){
+                        Toast.makeText(context,"사진은 9장까지 선택 가능합니다", Toast.LENGTH_LONG).show()
                     }
-                    galleryAdapter.notifyDataSetChanged()
+        //                else if(clipData.itemCount == 1){
+        //
+        //                }
+                    else{
+                        for(i in 0 until clipData.itemCount){
+                            imageList.add(Image("new",clipData.getItemAt(i).uri.toString()))
+                        }
+                        galleryAdapter.notifyDataSetChanged()
+                    }
                 }
             }
 
