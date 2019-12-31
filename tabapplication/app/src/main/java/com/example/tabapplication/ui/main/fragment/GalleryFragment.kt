@@ -2,10 +2,7 @@ package com.example.tabapplication.ui.main.fragment
 
 import android.Manifest
 import android.app.Activity
-import android.content.ContentProvider
-import android.content.ContentResolver
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.content.res.Configuration
 import android.database.Cursor
 import android.net.Uri
@@ -18,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -144,9 +142,11 @@ class GalleryFragment : Fragment(), GalleryImageClickListener {
     private fun goToAlbum(){
         val intent: Intent = Intent(Intent.ACTION_PICK)
         intent.type = MediaStore.Images.Media.CONTENT_TYPE
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true)
         startActivityForResult(intent, PICK_FROM_ALBUM )
     }
 
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(resultCode != Activity.RESULT_OK){
             Toast.makeText(context, "취소 되었습니다.", Toast.LENGTH_SHORT).show()
@@ -161,10 +161,31 @@ class GalleryFragment : Fragment(), GalleryImageClickListener {
         }
 
         if(requestCode == PICK_FROM_ALBUM){
-            val photoUri: Uri? = data!!.data
-           // var cursor: Cursor? = null
-            imageList.add(Image("new",photoUri.toString()))
-            galleryAdapter.notifyDataSetChanged()
+
+            if(data.clipData== null){
+                Toast.makeText(context, "다중 선택이 불가한 기기입니다.", Toast.LENGTH_LONG).show()
+            }
+            else{
+                var clipData: ClipData ?= data.clipData
+                Log.i("clipdata", clipData!!.itemCount.toString())
+
+                if(clipData.itemCount > 9){
+                    Toast.makeText(context,"사진은 9장까지 선택 가능합니다", Toast.LENGTH_LONG).show()
+                }
+//                else if(clipData.itemCount == 1){
+//
+//                }
+                else{
+                    for(i in 0 until clipData.itemCount){
+                        imageList.add(Image("new",clipData.getItemAt(i).uri.toString()))
+                    }
+                    galleryAdapter.notifyDataSetChanged()
+                }
+            }
+
+            //val photoUri: Uri? = data!!.data
+            //imageList.add(Image("new",photoUri.toString()))
+
 //            try{
 //                val proj =
 //                    arrayOf(MediaStore.Images.Media.DATA)
