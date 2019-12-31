@@ -41,7 +41,7 @@ class GalleryImageAdapter(private val itemList: List<Image>) : RecyclerView.Adap
 
             // load image
             GlideApp.with(context!!)
-                .load(image.image)
+                .load(image.imageUri)
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(itemView.ivGalleryImage)
