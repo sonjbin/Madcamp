@@ -21,8 +21,9 @@ import com.example.tabapplication.ui.main.activity.RESULT_CODE
 import com.example.tabapplication.ui.main.activity.WordAddActivity
 
 import com.example.tabapplication.ui.main.activity.WordQuizActivity
-import com.example.tabapplication.ui.main.adapter.ListAdapter
+import com.example.tabapplication.ui.main.adapter.WordListAdapter
 import com.example.tabapplication.ui.main.adapter.Word
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.DataOutputStream
 import java.lang.AssertionError
@@ -33,7 +34,7 @@ import java.lang.AssertionError
 class WordFragment : Fragment() {
 
     var wordArrayList: ArrayList<Word> = ArrayList()
-    var adapter: ListAdapter = ListAdapter(wordArrayList)
+    var adapter: WordListAdapter = WordListAdapter(wordArrayList)
     lateinit var recyclerView: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,7 +65,7 @@ class WordFragment : Fragment() {
         )
 
         recyclerView = view!!.findViewById(R.id.my_recycler_view)
-        adapter = ListAdapter(wordArrayList)
+        adapter = WordListAdapter(wordArrayList)
 
         var viewManager : RecyclerView.LayoutManager = LinearLayoutManager(context)
 
@@ -137,7 +138,7 @@ class WordFragment : Fragment() {
             val vocabulary = data!!.getStringExtra("vocabulary")
             val meaning = data!!.getStringExtra("meaning")
             wordArrayList.add(Word(vocabulary, meaning))
-            adapter = ListAdapter(wordArrayList)
+            adapter = WordListAdapter(wordArrayList)
             recyclerView!!.adapter = adapter
         }
     }

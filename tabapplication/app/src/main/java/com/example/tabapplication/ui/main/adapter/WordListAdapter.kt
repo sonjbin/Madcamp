@@ -9,7 +9,7 @@ import com.example.tabapplication.ui.main.fragment.WordFragment
 
 import kotlinx.android.synthetic.main.item_dictionary.view.*
 
-class ListAdapter(val context:  ArrayList<Word>): RecyclerView.Adapter<ListAdapter.UserViewHolder>() {
+class WordListAdapter(val context:  ArrayList<Word>): RecyclerView.Adapter<WordListAdapter.UserViewHolder>() {
 
     override fun getItemCount(): Int {return context.size}
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
