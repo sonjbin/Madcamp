@@ -26,6 +26,8 @@
     android:label="Quiz"
     android:theme="@style/AppTheme"
     />
+        <activity android:name = ".ui.main.activity.WordAddActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

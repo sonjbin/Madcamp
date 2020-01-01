@@ -7,20 +7,34 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.Switch
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.example.tabapplication.R
+import com.example.tabapplication.ui.main.activity.RESULT_CODE
+import com.example.tabapplication.ui.main.activity.WordAddActivity
+
 import com.example.tabapplication.ui.main.activity.WordQuizActivity
 import com.example.tabapplication.ui.main.adapter.ListAdapter
 import com.example.tabapplication.ui.main.adapter.Word
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.io.DataOutputStream
+import java.lang.AssertionError
 
 /**
  * A simple [Fragment] subclass.
  */
 class WordFragment : Fragment() {
 
+    var wordArrayList: ArrayList<Word> = ArrayList()
+    var adapter: ListAdapter = ListAdapter(wordArrayList)
+    lateinit var recyclerView: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,7 +42,7 @@ class WordFragment : Fragment() {
         // Inflate the layout for this fragment
         var view:View? = inflater.inflate(R.layout.fragment_word, container, false)
 
-        var wordArrayList=
+        wordArrayList=
             arrayListOf<Word> (
 
             Word("secretary", "비서"),
@@ -47,11 +61,10 @@ class WordFragment : Fragment() {
                 Word("refrigerator", "냉장고"),
                 Word("replica", "복제품")
 
-
         )
 
-        val recyclerView: RecyclerView = view!!.findViewById(R.id.my_recycler_view)
-        val adapter = ListAdapter(wordArrayList)
+        recyclerView = view!!.findViewById(R.id.my_recycler_view)
+        adapter = ListAdapter(wordArrayList)
 
         var viewManager : RecyclerView.LayoutManager = LinearLayoutManager(context)
 
@@ -59,13 +72,74 @@ class WordFragment : Fragment() {
         recyclerView.layoutManager = viewManager
 
 
-        val button: Button = view!!.findViewById(R.id.quizButton)
-        button.setOnClickListener{
+
+        val plusFab: FloatingActionButton = view.findViewById(R.id.plusFab)
+        val quizFab: FloatingActionButton = view.findViewById(R.id.quizFab)
+        val addFab: FloatingActionButton = view.findViewById(R.id.addFab)
+        val quizLayout: LinearLayout = view.findViewById(R.id.quizLayout)
+        val addLayout: LinearLayout = view.findViewById(R.id.addLayout)
+        val showButtonAnim: Animation = AnimationUtils.loadAnimation(context,R.anim.show_button)
+        val hideButtonAnim: Animation = AnimationUtils.loadAnimation(context,R.anim.hide_button)
+        val showLayoutAnim: Animation = AnimationUtils.loadAnimation(context,R.anim.show_layout)
+        val hideLayoutAnim: Animation = AnimationUtils.loadAnimation(context,R.anim.hide_layout)
+
+        plusFab.setOnClickListener{
+            if(quizLayout.visibility == View.VISIBLE && addLayout.visibility == View.VISIBLE ){
+                quizLayout.visibility = View.GONE
+                addLayout.visibility = View.GONE
+                quizFab.isClickable = false
+                addFab.isClickable = false
+                plusFab.startAnimation(hideButtonAnim)
+                quizLayout.startAnimation(hideLayoutAnim)
+                addLayout.startAnimation(hideLayoutAnim)
+            }
+            else{
+                quizLayout.visibility = View.VISIBLE
+                addLayout.visibility = View.VISIBLE
+                quizFab.isClickable = true
+                addFab.isClickable = true
+                plusFab.startAnimation(showButtonAnim)
+                quizLayout.startAnimation(showLayoutAnim)
+                addLayout.startAnimation(showLayoutAnim)
+            }
+        }
+
+        quizFab.setOnClickListener{
             val intent = Intent(activity, WordQuizActivity::class.java)
             intent.putParcelableArrayListExtra("wordArray", wordArrayList)
             startActivity(intent)
         }
+
+        addFab.setOnClickListener{
+
+//            wordArrayList.add(Word("A", "B"))
+//            adapter = ListAdapter(wordArrayList)
+//            recyclerView.adapter = adapter
+            val addintent = Intent(activity, WordAddActivity::class.java)
+            startActivityForResult(addintent, 0)
+//            Toast.makeText(context, "AAA", Toast.LENGTH_LONG)
+//            val main = Intent(activity, WordFragment::class.java)
+//            val vocabulary = intent.getStringExtra("vocabulary")
+//            val meaning = intent.getStringExtra("meaning")
+//            wordArrayList.add(Word(vocabulary, meaning))
+//            adapter = ListAdapter(wordArrayList)
+//            recyclerView.adapter = adapter
+
+        }
+
+
         return view
+    }
+
+    override fun  onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == RESULT_CODE){
+            val vocabulary = data!!.getStringExtra("vocabulary")
+            val meaning = data!!.getStringExtra("meaning")
+            wordArrayList.add(Word(vocabulary, meaning))
+            adapter = ListAdapter(wordArrayList)
+            recyclerView!!.adapter = adapter
+        }
     }
 
 

@@ -1,12 +1,14 @@
 package com.example.tabapplication
 
 import android.content.pm.ActivityInfo
+import android.os.Build
 import android.os.Bundle
 
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tabapplication.ui.main.adapter.SectionsPagerAdapter
+import java.lang.AssertionError
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,5 +31,12 @@ class MainActivity : AppCompatActivity() {
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                .setAction("Action", null).show()
 //        }
+    }
+
+    override fun setRequestedOrientation(requestedOrientation: Int) {
+        if(Build.VERSION.SDK_INT != Build.VERSION_CODES.O) {
+            super.setRequestedOrientation(requestedOrientation)
+        }
+
     }
 }

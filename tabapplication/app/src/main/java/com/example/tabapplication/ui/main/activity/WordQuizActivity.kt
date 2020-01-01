@@ -19,7 +19,7 @@ class WordQuizActivity : AppCompatActivity() {
         setContentView(R.layout.word_quiz)
 
         var wordArrayList = intent. getParcelableArrayListExtra<Word>("wordArray")
-        val totalNum = 5
+        val totalNum = 3
         var problemNum = intent.getIntExtra("problemNum", totalNum)
         var correctNum = intent.getIntExtra("correctNum",0)
         val wordNum = wordArrayList.size

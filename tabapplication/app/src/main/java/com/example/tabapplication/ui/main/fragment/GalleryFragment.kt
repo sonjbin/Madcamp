@@ -66,10 +66,9 @@ class GalleryFragment : Fragment(), GalleryImageClickListener {
         }
         recyclerview.layoutManager = GridLayoutManager(context, SPAN_COUNT)
         recyclerview.adapter = galleryAdapter
-
+        tedPermission()
         val mFab: FloatingActionButton = view.findViewById(R.id.addButton)
         mFab.setOnClickListener{
-            tedPermission()
             if(isPermission) goToAlbum()
             else Toast.makeText(view.context, resources.getString(R.string.permission_2), Toast.LENGTH_LONG).show();
         }
