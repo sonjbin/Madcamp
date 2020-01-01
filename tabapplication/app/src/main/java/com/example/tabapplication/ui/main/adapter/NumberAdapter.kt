@@ -10,16 +10,21 @@ import kotlinx.android.synthetic.main.item_phonenumber.view.*
 
 
 
-class NumberAdapter(val users: List<NumberFragment.Contact>,
+class NumberAdapter(val users: MutableList<NumberFragment.Contact>,
                     val onClick: (NumberFragment.Contact) -> Unit) : RecyclerView.Adapter<NumberAdapter.UserViewHolder>() {
 
     override fun getItemCount(): Int {return users.size}
+
+//    private val simpleAdapter = NumberAdapter(users.toMutableList())
+
+
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.userNameText.text =
             users[position].name
         holder.userPhoneText.text =
             users[position].phoneNumber
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val holder = UserViewHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -32,6 +37,11 @@ class NumberAdapter(val users: List<NumberFragment.Contact>,
             onClick(users[holder.adapterPosition])
         }
         return holder
+    }
+
+    fun removeAt(position: Int) {
+        users.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     class UserViewHolder(val root: View) : RecyclerView.ViewHolder(root) {
