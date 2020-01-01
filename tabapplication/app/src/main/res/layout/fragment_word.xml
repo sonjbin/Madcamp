@@ -5,9 +5,18 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/my_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/appBarLayout"
+        android:layout_marginBottom="80dp"
+
+        android:padding="10dp"
+        android:scrollbars="vertical">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <Button
         android:id="@+id/quizButton"
@@ -16,7 +25,20 @@
         android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/cardview_light_background"
         android:text="Quiz" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginVertical="25dp"
+        android:layout_marginBottom="0dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="@color/cardview_light_background" />
 
 
 
