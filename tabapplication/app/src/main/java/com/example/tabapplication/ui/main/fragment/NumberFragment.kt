@@ -1,7 +1,5 @@
 package com.example.tabapplication.ui.main.fragment
 
-
-
 import android.Manifest.permission.READ_CONTACTS
 import android.content.Context
 import android.content.Intent
@@ -128,8 +126,4 @@ class NumberFragment : Fragment() {
             startActivity(intent)
         }
     }
-
-
-
-
 }

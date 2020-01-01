@@ -5,38 +5,34 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tabapplication.R
-import com.example.tabapplication.ui.main.fragment.NumberFragment
-import kotlinx.android.synthetic.main.item_phonenumber.view.*
+import com.example.tabapplication.ui.main.fragment.DictionaryFragment
+import com.example.tabapplication.ui.main.fragment.User
+import kotlinx.android.synthetic.main.item_dictionary.view.*
 
+class ListAdapter(val context:  ArrayList<User>): RecyclerView.Adapter<ListAdapter.UserViewHolder>() {
 
-
-class NumberAdapter(val users: List<NumberFragment.Contact>,
-                    val onClick: (NumberFragment.Contact) -> Unit) : RecyclerView.Adapter<NumberAdapter.UserViewHolder>() {
-
-    override fun getItemCount(): Int {return users.size}
+    override fun getItemCount(): Int {return context.size}
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.userNameText.text =
-            users[position].name
+            context[position].eng_word
         holder.userPhoneText.text =
-            users[position].phoneNumber
+            context[position].kor_word
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val holder = UserViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.item_phonenumber,
+                R.layout.item_dictionary,
                 parent,
                 false
             )
         )
-        holder.root.setOnClickListener {
-            onClick(users[holder.adapterPosition])
-        }
+
         return holder
     }
 
     class UserViewHolder(val root: View) : RecyclerView.ViewHolder(root) {
-        val userNameText = root.user_name
-        val userPhoneText = root.user_phone
+        val userNameText = root.eng_word
+        val userPhoneText = root.kor_word
     }
 }
-
