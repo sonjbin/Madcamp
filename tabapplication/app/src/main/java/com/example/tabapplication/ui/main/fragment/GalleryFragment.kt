@@ -163,7 +163,10 @@ class GalleryFragment : Fragment(), GalleryImageClickListener {
 
             if (data != null) {
                 if(data.clipData== null){
-                    Toast.makeText(context, "다중 선택이 불가한 기기입니다.", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(context, "다중 선택이 불가한 기기입니다.", Toast.LENGTH_LONG).show()
+                    val photoUri: Uri? = data!!.data
+                    imageList.add(Image("new",photoUri.toString()))
+                    galleryAdapter.notifyDataSetChanged()
                 } else{
                     var clipData: ClipData ?= data.clipData
                     Log.i("clipdata", clipData!!.itemCount.toString())

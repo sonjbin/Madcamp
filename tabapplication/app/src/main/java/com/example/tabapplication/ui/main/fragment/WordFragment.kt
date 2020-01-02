@@ -137,9 +137,14 @@ class WordFragment : Fragment() {
         if(resultCode == RESULT_CODE){
             val vocabulary = data!!.getStringExtra("vocabulary")
             val meaning = data!!.getStringExtra("meaning")
-            wordArrayList.add(Word(vocabulary, meaning))
-            adapter = WordListAdapter(wordArrayList)
-            recyclerView!!.adapter = adapter
+            if(vocabulary == "" || meaning == ""){
+                Toast.makeText(context, "Please write something", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                wordArrayList.add(Word(vocabulary, meaning))
+                adapter = WordListAdapter(wordArrayList)
+                recyclerView!!.adapter = adapter
+            }
         }
     }
 
